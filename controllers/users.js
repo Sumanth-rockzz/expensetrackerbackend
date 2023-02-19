@@ -2,6 +2,8 @@ const User=require('../models/users');
 
 const bcrypt=require('bcrypt');
 
+const jwt=require('jsonwebtoken');
+
 function isStringInvalid(string){
     if(string==undefined ||string.length===0){
         return true;
@@ -28,8 +30,6 @@ exports.addUsers=async(req,res,next)=>{
         res.status(201).json({message:"Successfully Created New User"});
         }
         catch(err){
-
-            console.log(err);
         if(err.name="SequelizeUniqueConstraintError"){
            err="User Already Exists";
         } 
@@ -43,12 +43,17 @@ exports.addUsers=async(req,res,next)=>{
     })
     }
     catch(err){
-        console.log("here it is ",err)
         res.status(500).json({
             message:err
         });
     }
 }
+
+function generateAccessToken(id,name){
+
+    return jwt.sign({userId:id,name:name},'secretkey');
+
+ }                                  //ndsdjkgsdgsggssu862867863sdnskjdskj353kddsskjdddsdfsf43434 secret ket should be long
 
 exports.login= async (req,res,next)=>{
     try{
@@ -62,7 +67,7 @@ exports.login= async (req,res,next)=>{
               throw new Error("Something Went Wrong");
             }
             if(result===true){
-                return res.status(200).json({success:true,message:"User Logged in  Successfully"});
+                return res.status(200).json({success:true,message:"User Logged in  Successfully",token:generateAccessToken(user[0].id,user[0].username)});
             }
                 else{
                 return res.status(400).json({success:false,message:"Password is invalid"});
