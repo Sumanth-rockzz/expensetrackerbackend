@@ -33,8 +33,10 @@ exports.addExpense=async(req,res,next)=>{
 exports.getExpenses=async(req,res,next)=>{
 
     try{
-        /* const response =await Expense.findAll({where:{userId:req.user.id}}); */
-        const response =await req.user.getExpenses();
+    
+      /*  const response=await Expense.findAll(); */
+       /* const response =await Expense.findAll({where:{userId:req.user.id}}); */
+       const response =await req.user.getExpenses();
         res.status(200).json({message:response,success:true});
     }
     catch(err){
@@ -52,6 +54,10 @@ exports.deleteExpense=async(req,res,next)=>{
         return  res.status(500).json({message:'something went wrong',success:false})
        }
         const response=await Expense.destroy({where:{id:id,userId:req.user.id}});
+        if(response===0);
+        {
+            return res.status(404).json({message:"Expense does not Belongs to User",success:false});
+        }
         res.status(200).json({message:response,success:true});
     }
     catch(err){
