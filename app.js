@@ -9,6 +9,8 @@ const UserRoutes=require('./routes/users');
 
 const ExpenseRoutes=require('./routes/expense');
 
+const purchaseRoutes=require('./routes/purchase')
+
 const bodyParser=require('body-parser');
 
 const sequelize=require('./util/database');
@@ -16,9 +18,15 @@ const sequelize=require('./util/database');
 
 const User=require('./models/users');
 const Expense=require('./models/expense');
+const Order=require('./models/orders');
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
+
+User.hasMany(Order);
+Order.belongsTo(User);
+
+
 
 
 
@@ -28,6 +36,8 @@ app.use(bodyParser.json({extended:false}));
 app.use('/user',UserRoutes);
 
 app.use('/expense',ExpenseRoutes);
+
+app.use('/purchase',purchaseRoutes);
 
 
 
