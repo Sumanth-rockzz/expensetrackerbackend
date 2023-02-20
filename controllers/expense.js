@@ -53,16 +53,21 @@ exports.deleteExpense=async(req,res,next)=>{
        {
         return  res.status(500).json({message:'something went wrong',success:false})
        }
+       
         const response=await Expense.destroy({where:{id:id,userId:req.user.id}});
-        if(response===0);
-        {
-            return res.status(404).json({message:"Expense does not Belongs to User",success:false});
+
+        if(response===0){
+           return  res.status(401).json({message:"Expense does not Belongs to User",success:false});
         }
+       
         res.status(200).json({message:response,success:true});
+
+
+      
     }
     catch(err){
 
-        res.status(500).json({message:err,success:true});
+        res.status(500).json({message:err,success:false});
 
     }
 }

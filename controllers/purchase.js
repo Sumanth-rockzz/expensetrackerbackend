@@ -1,5 +1,6 @@
 const Razorpay=require('razorpay');
 const Order=require('../models/orders');
+const jwt=require('jsonwebtoken');
 
 exports.purchasePremium=async (req,res,next)=>{
     try{
@@ -27,7 +28,11 @@ exports.purchasePremium=async (req,res,next)=>{
     }
 
 }
+function generateAccessToken(id,name,ispremiumuser){
 
+    return jwt.sign({userId:id,name:name,ispremiumuser},'secretkey');
+
+ } 
 exports.updateTransactionStatus= async (req,res,next)=>{
     try {
         const userId = req.user.id;
@@ -37,8 +42,9 @@ exports.updateTransactionStatus= async (req,res,next)=>{
         const promise2 =  req.user.update({ ispremiumuser: true }) 
 
         Promise.all([promise1, promise2]).then(()=> {
-            return res.status(202).json({success: true, message: "Transaction Successful"});
+            return res.status(202).json({success: true, message: "Transaction Successful",token:generateAccessToken(userId,undefined,true)});
         }).catch((error ) => {
+            /* order.update({ paymentid: payment_id, status: 'Failed'}) */
             throw new Error(error)
         })
 

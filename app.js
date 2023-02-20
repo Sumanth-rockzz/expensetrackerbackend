@@ -9,7 +9,9 @@ const UserRoutes=require('./routes/users');
 
 const ExpenseRoutes=require('./routes/expense');
 
-const purchaseRoutes=require('./routes/purchase')
+const PurchaseRoutes=require('./routes/purchase');
+
+const PremiumRoutes=require('./routes/premium');
 
 const bodyParser=require('body-parser');
 
@@ -19,6 +21,7 @@ const sequelize=require('./util/database');
 const User=require('./models/users');
 const Expense=require('./models/expense');
 const Order=require('./models/orders');
+
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
@@ -37,7 +40,9 @@ app.use('/user',UserRoutes);
 
 app.use('/expense',ExpenseRoutes);
 
-app.use('/purchase',purchaseRoutes);
+app.use('/purchase',PurchaseRoutes);
+
+app.use('/premium',PremiumRoutes);
 
 
 

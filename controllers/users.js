@@ -49,9 +49,9 @@ exports.addUsers=async(req,res,next)=>{
     }
 }
 
-function generateAccessToken(id,name){
+function generateAccessToken(id,name,ispremiumuser){
 
-    return jwt.sign({userId:id,name:name},'secretkey');
+    return jwt.sign({userId:id,name:name,ispremiumuser},'secretkey');
 
  }                                  //ndsdjkgsdgsggssu862867863sdnskjdskj353kddsskjdddsdfsf43434 secret ket should be long
 
@@ -67,7 +67,7 @@ exports.login= async (req,res,next)=>{
               throw new Error("Something Went Wrong");
             }
             if(result===true){
-                return res.status(200).json({success:true,message:"User Logged in  Successfully",token:generateAccessToken(user[0].id,user[0].username)});
+                return res.status(200).json({success:true,message:"User Logged in  Successfully",token:generateAccessToken(user[0].id,user[0].username,user[0].ispremiumuser)});
             }
                 else{
                 return res.status(400).json({success:false,message:"Password is invalid"});
@@ -81,3 +81,4 @@ exports.login= async (req,res,next)=>{
         return res.status(500).json({success:false,message:err});
     }     
     }
+    
