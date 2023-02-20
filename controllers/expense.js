@@ -2,6 +2,7 @@
 const { where } = require('sequelize');
 
 const Expense=require('../models/expense');
+const sequelize = require('../util/database');
 
 function isStringInvalid(string){
     if(string.length===0 || string==undefined){
@@ -20,11 +21,20 @@ exports.addExpense=async(req,res,next)=>{
             return res.status(500).json({message:'Bad Parmeters:Something is Missing',success:false})
         }
        /* const response= await Expense.create({amount,date,reason,category,userId:req.user.id});  */
+      //console.log(req.user.totalexpenses);
+       
        const response= await req.user.createExpense({amount,date,reason,category});
+
+       //console.log(response);
+
+       const totalExpense=Number(req.user.totalexpenses)+Number(amount);
+
+        await req.user.update({totalexpenses:totalExpense});
         
         res.status(201).json({message:response,success:true});
         
     }catch(err){
+        console.log(err);
         res.status(500).json({message:"Something went wrong",success:false})
     }
 

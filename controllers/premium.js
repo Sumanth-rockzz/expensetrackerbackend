@@ -6,15 +6,7 @@ exports.showLeaderBoard=async(req,res,next)=>{
 try{
 
     const leaderboarddetails=await User.findAll({
-        attributes:['id','username',[sequelize.fn('sum',sequelize.col('expenses.amount')),'total_expense']],
-        include:[
-            {
-                model:Expense,
-                attributes:[]
-            }    
-        ],
-        group:['user.id'],
-        order:[['total_expense','DESC']]
+        order:[['totalexpenses','DESC']]
     });
 
 
@@ -25,6 +17,5 @@ catch(err){
     res.status(500).json({success:false,error:err})
 }
   
-
 }
 
