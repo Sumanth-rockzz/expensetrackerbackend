@@ -5,8 +5,8 @@ const jwt=require('jsonwebtoken');
 exports.purchasePremium=async (req,res,next)=>{
     try{
         var rp=new Razorpay({
-            key_id:'rzp_test_kGQ2EkGv0tbwOa',
-            key_secret:'xu65PkB7g37j4SxQTXIsBonu'
+            key_id:process.env.RazorPay_Key_Id,
+            key_secret:process.env.RazorPay_Key_Secret
         })
         const amount=2500;
         rp.orders.create({amount,currency:"INR"},(err,order)=>{
@@ -30,7 +30,7 @@ exports.purchasePremium=async (req,res,next)=>{
 }
 function generateAccessToken(id,name,ispremiumuser){
 
-    return jwt.sign({userId:id,name:name,ispremiumuser},'secretkey');
+    return jwt.sign({userId:id,name:name,ispremiumuser},process.env.Token_Secret);
 
  } 
 exports.updateTransactionStatus= async (req,res,next)=>{

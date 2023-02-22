@@ -51,7 +51,7 @@ exports.addUsers=async(req,res,next)=>{
 
 function generateAccessToken(id,name,ispremiumuser){
 
-    return jwt.sign({userId:id,name:name,ispremiumuser},'secretkey');
+    return jwt.sign({userId:id,name:name,ispremiumuser},process.env.Token_Secret);
 
  }                                  //ndsdjkgsdgsggssu862867863sdnskjdskj353kddsskjdddsdfsf43434 secret ket should be long
 

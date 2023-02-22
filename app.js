@@ -13,6 +13,8 @@ const PurchaseRoutes=require('./routes/purchase');
 
 const PremiumRoutes=require('./routes/premium');
 
+const PasswordRoutes=require('./routes/forgotpassword');
+
 const bodyParser=require('body-parser');
 
 const sequelize=require('./util/database');
@@ -21,13 +23,18 @@ const sequelize=require('./util/database');
 const User=require('./models/users');
 const Expense=require('./models/expense');
 const Order=require('./models/orders');
+const ForgotPassword=require('./models/forgotpassword');
 
+require('dotenv').config();
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
 
 User.hasMany(Order);
 Order.belongsTo(User);
+
+User.hasMany(ForgotPassword);
+ForgotPassword.belongsTo(User);
 
 
 
@@ -44,9 +51,9 @@ app.use('/purchase',PurchaseRoutes);
 
 app.use('/premium',PremiumRoutes);
 
+app.use('/password',PasswordRoutes);
 
-
-sequelize.sync(/* {force:true} */)
+sequelize.sync( /* {force:true} */ )
 .then(()=>{
     app.listen(3000);
 }).catch(err=>console.log(err));
