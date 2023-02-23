@@ -38,7 +38,7 @@ exports.addExpense=async(req,res,next)=>{
         
         await t.commit();
         
-        res.status(201).json({message:response,success:true});
+        res.status(201).json({message:response,success:true,totalExpense:totalExpense});
         
     } catch(err) {
          await t.rollback();
@@ -47,17 +47,41 @@ exports.addExpense=async(req,res,next)=>{
     }
 
 }
-
 exports.getExpenses=async(req,res,next)=>{
 
     try{
+        console.log(req.query);
+        const page=+req.query.page||1;
+        const limit=+req.query.limit||5;
+
+
+        const totalExpense=req.user.totalexpenses;
+
+        
+        console.log(">>>>>>>>>>",totalExpense);
     
       /*  const response=await Expense.findAll(); */
        /* const response =await Expense.findAll({where:{userId:req.user.id}}); */
-       const response =await req.user.getExpenses();
-        res.status(200).json({message:response,success:true});
+       const total  = await req.user.getExpenses();
+      
+       const response =await req.user.getExpenses({
+        offset:(page-1)*limit,
+        limit:limit
+       });
+       
+        res.status(200).json({message:response,
+            success:true,
+            currentpage:page,
+            nextpage:page+1,
+            previouspage:page-1,
+            hasnextpage:limit*page<total.length,
+            haspreviouspage:page>1,
+            lastpage:Math.ceil(total.length/limit),
+            totalExpense:totalExpense
+        });
     }
     catch(err){
+        console.log(">>>>>>>>",err)
         res.status(500).json({message:err,success:false});
 
     }
@@ -85,13 +109,14 @@ exports.deleteExpense=async(req,res,next)=>{
            return  res.status(401).json({message:"Expense does not Belongs to User",success:false});
         }
         await t.commit();
-        res.status(200).json({message:response,success:true});
+        res.status(200).json({message:response,success:true,totalExpense:totalExpense});
       
     }
     catch(err){
         console.log(err)
         await t.rollback();
         res.status(500).json({message:err,success:false});
+
 
     }
 }
@@ -147,7 +172,7 @@ exports.downloadExpenses=async(req,res,next)=>{
 
 exports.downlodedExpenses=async(req,res,next)=>{
     try{
-      const downlodedfiles = await Downloadfile.findAll({where:{userId:req.user.id}})
+      const downlodedfiles = await Downloadfile.findAll({where:{userId:req.user.id},limit:2})
        // console.log(">>>>>here",downlodedfiles);
         res.status(200).json({success:true,message:downlodedfiles})
     }catch(err){

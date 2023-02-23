@@ -105,10 +105,12 @@ exports.updatepassword= async (req,res,next)=>{
                             bcrypt.hash(newpassword,saltRounds,function(err, hash){
                                 if(err){
                                     console.log(err);
-                                    throw new Error(err);
+                                  return res.status(500).json({message:err})
                                 }
-                                user.update({ password: hash }).then(() => {
+                               user.update({ password: hash }).then(() => {
                                     res.status(201).json({message: 'Successfuly updated the new password'})
+                                }).catch((err)=>{
+                                   return res.status(500).json({message:err})
                                 })
                             });
                 } else{

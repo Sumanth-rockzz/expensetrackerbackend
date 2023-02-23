@@ -6,7 +6,8 @@ exports.showLeaderBoard=async(req,res,next)=>{
 try{
 
     const leaderboarddetails=await User.findAll({
-        order:[['totalexpenses','DESC']]
+        order:[['totalexpenses','DESC']],
+        limit:5
     });
 
 
