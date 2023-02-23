@@ -24,6 +24,8 @@ const User=require('./models/users');
 const Expense=require('./models/expense');
 const Order=require('./models/orders');
 const ForgotPassword=require('./models/forgotpassword');
+const DowloadedFiles=require('./models/downlodedfile');
+const { downloadExpenses } = require('./controllers/expense');
 
 require('dotenv').config();
 
@@ -35,6 +37,9 @@ Order.belongsTo(User);
 
 User.hasMany(ForgotPassword);
 ForgotPassword.belongsTo(User);
+
+User.hasMany(DowloadedFiles);
+DowloadedFiles.belongsTo(User);
 
 
 
@@ -52,6 +57,7 @@ app.use('/purchase',PurchaseRoutes);
 app.use('/premium',PremiumRoutes);
 
 app.use('/password',PasswordRoutes);
+
 
 sequelize.sync( /* {force:true} */ )
 .then(()=>{
