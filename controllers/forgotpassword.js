@@ -12,7 +12,8 @@ const bcrypt=require('bcrypt');
 exports.forgotpassword= async(req,res,next)=>{
         try {
             const {email}  =  req.body;
-            console.log("it entered ")
+            /* console.log("it entered ")
+            console.log(">>>>>>>>>>",email); */
             const user = await User.findOne({where : {email: email }});
             console.log(user);
             if(user){
@@ -27,7 +28,7 @@ exports.forgotpassword= async(req,res,next)=>{
     
                 const msg = {
                     to: email,
-                    from: 'rockzz@gmail.com', 
+                    from: process.env.FROM_EMAIL, 
                     subject: 'Reset Password',
                     text: 'Forgot Password Do Not Worry Click below  ',
                     html: `<a href="http://localhost:3000/password/resetpassword/${id}">Reset password</a>`,
@@ -36,20 +37,21 @@ exports.forgotpassword= async(req,res,next)=>{
                 sgMail
                 .send(msg)
                 .then((response) => {
-    
+                   /*  console.log(response); */
                     // console.log(response[0].statusCode)
                     // console.log(response[0].headers)
                     return res.status(response[0].statusCode).json({message: 'Link to reset password sent to your mail ', success: true})
     
                 })
                 .catch((err) => {
+                   /*  console.log(">>>>>>>>",err); */
                     return res.status(500).json({ message: err, success: false });
                 })
             }else {
                 throw new Error('User doesnt exist')
             }
         } catch(err){
-            console.error(err)
+            /* console.error(err) */
             return res.status(500).json({ message: err, success: false });
         }
 }
@@ -60,8 +62,8 @@ exports.resetpassword=async(req,res,next)=>{
         const uuid=req.params.id;
 
      const forgotpasswordrequest = await  ForgotPassword.findOne({where:{id:uuid}})
-     console.log(forgotpasswordrequest);
-        console.log(uuid);
+     /* console.log(forgotpasswordrequest);
+        console.log(uuid); */
     if(forgotpasswordrequest){
           await forgotpasswordrequest.update({isactive:false})
 
@@ -69,7 +71,7 @@ exports.resetpassword=async(req,res,next)=>{
             <script>
                 function formsubmitted(e){
                     e.preventDefault();
-                    console.log('called')
+
                 }
             </script>
             <form action="/password/updatepassword/${uuid}" method="get">
@@ -86,7 +88,7 @@ res.end()
     }
     }
     catch(err){
-        console.log(err);
+       /*  console.log(err); */
         res.status(500).json({message:err,success:false})
     }
 }
@@ -95,9 +97,9 @@ exports.updatepassword= async (req,res,next)=>{
 
         try {
             const { newpassword } = req.query;
-            console.log('>>>>>',newpassword);
+            /* console.log('>>>>>',newpassword); */
             const  resetpasswordid  = req.params.id;
-            console.log('>>>>>',resetpasswordid);
+           /*  console.log('>>>>>',resetpasswordid); */
            const resetpasswordrequest= await  ForgotPassword.findOne({ where : { id: resetpasswordid }})
               const user= await  User.findOne({where: { id : resetpasswordrequest.userId}})
                     if(user) {

@@ -51,7 +51,7 @@ exports.addUsers=async(req,res,next)=>{
 
 function generateAccessToken(id,name,ispremiumuser){
 
-    return jwt.sign({userId:id,name:name,ispremiumuser},process.env.Token_Secret);
+    return jwt.sign({userId:id,name:name,ispremiumuser},process.env.TOKEN_SECRET);
 
  }                                  //ndsdjkgsdgsggssu862867863sdnskjdskj353kddsskjdddsdfsf43434 secret ket should be long
 
@@ -59,7 +59,7 @@ exports.login= async (req,res,next)=>{
     try{
         const{email,password}=req.body;
         const user= await User.findAll({where:{email:email}});
-        console.log(user);
+        //console.log(user);
         if(user.length>0)
         {
         bcrypt.compare(password,user[0].password,(err,result)=>{
@@ -81,4 +81,5 @@ exports.login= async (req,res,next)=>{
         return res.status(500).json({success:false,message:err});
     }     
     }
-    
+   
+   

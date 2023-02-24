@@ -3,7 +3,25 @@ const express=require('express');
 const app=express();
 
 const cors=require('cors');
+
+const helmet=require('helmet');
+
+const morgan=require('morgan');
+
+const fs=require('fs');
+
+const path = require('path');
+
+require('dotenv').config();
+
+const accessLogStream=fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'})
+const errorLogStream=fs.createWriteStream(path.join(__dirname,'error.log'),{flags:'a'})
 app.use(cors());
+
+app.use(helmet());
+
+app.use(morgan('combined',{stream:accessLogStream}));
+app.use(morgan('combined',{stream:errorLogStream,skip:(req,res)=>res.statusCode<400}));
 
 const UserRoutes=require('./routes/users');
 
@@ -27,7 +45,7 @@ const ForgotPassword=require('./models/forgotpassword');
 const DowloadedFiles=require('./models/downlodedfile');
 const { downloadExpenses } = require('./controllers/expense');
 
-require('dotenv').config();
+
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
@@ -40,9 +58,6 @@ ForgotPassword.belongsTo(User);
 
 User.hasMany(DowloadedFiles);
 DowloadedFiles.belongsTo(User);
-
-
-
 
 
 app.use(bodyParser.json({extended:false}));
@@ -61,7 +76,7 @@ app.use('/password',PasswordRoutes);
 
 sequelize.sync( /* {force:true} */ )
 .then(()=>{
-    app.listen(3000);
+    app.listen(process.env.PORT||3000);
 }).catch(err=>console.log(err));
 
 

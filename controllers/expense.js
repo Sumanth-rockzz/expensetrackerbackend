@@ -26,7 +26,7 @@ exports.addExpense=async(req,res,next)=>{
             return res.status(500).json({message:'Bad Parmeters:Something is Missing',success:false})
         }
        /* const response= await Expense.create({amount,date,reason,category,userId:req.user.id});  */
-      //console.log(req.user.totalexpenses);
+      console.log(req.user.totalexpenses);
        
        const response= await req.user.createExpense({amount,date,reason,category},{transaction:t});
 
@@ -50,7 +50,7 @@ exports.addExpense=async(req,res,next)=>{
 exports.getExpenses=async(req,res,next)=>{
 
     try{
-        console.log(req.query);
+        /* console.log(req.query); */
         const page=+req.query.page||1;
         const limit=+req.query.limit||5;
 
@@ -58,7 +58,7 @@ exports.getExpenses=async(req,res,next)=>{
         const totalExpense=req.user.totalexpenses;
 
         
-        console.log(">>>>>>>>>>",totalExpense);
+       /*  console.log(">>>>>>>>>>",totalExpense); */
     
       /*  const response=await Expense.findAll(); */
        /* const response =await Expense.findAll({where:{userId:req.user.id}}); */
@@ -81,9 +81,8 @@ exports.getExpenses=async(req,res,next)=>{
         });
     }
     catch(err){
-        console.log(">>>>>>>>",err)
+        /* console.log(">>>>>>>>",err) */
         res.status(500).json({message:err,success:false});
-
     }
 }
 
