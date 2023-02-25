@@ -31,7 +31,7 @@ exports.forgotpassword= async(req,res,next)=>{
                     from: process.env.FROM_EMAIL, 
                     subject: 'Reset Password',
                     text: 'Forgot Password Do Not Worry Click below  ',
-                    html: `<a href="http://localhost:3000/password/resetpassword/${id}">Reset password</a>`,
+                    html: `<a href="http://18.234.80.91:3000/password/resetpassword/${id}">Reset password</a>`,
                 }
     
                 sgMail

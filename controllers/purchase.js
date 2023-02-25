@@ -9,7 +9,7 @@ exports.purchasePremium=async (req,res,next)=>{
             key_secret:process.env.RAZORPAY_KEY_SECRET
         })
         const amount=2500;
-        rp.orders.create({amount,currency:"INR"},(err,order)=>{
+       await rp.orders.create({amount,currency:"INR"},(err,order)=>{
             if(err) {
                 throw new Error(JSON.stringify(err));
             }

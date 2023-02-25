@@ -2,6 +2,7 @@ const express=require('express');
 
 const app=express();
 
+
 const cors=require('cors');
 
 const helmet=require('helmet');
@@ -18,7 +19,12 @@ const accessLogStream=fs.createWriteStream(path.join(__dirname,'access.log'),{fl
 const errorLogStream=fs.createWriteStream(path.join(__dirname,'error.log'),{flags:'a'})
 app.use(cors());
 
-app.use(helmet());
+
+
+app.use((req, res, next) => {
+    res.setHeader('Content-Security-Policy', "https://cdn.jsdelivr.net https://checkout.razorpay.com ");
+    next();
+  });
 
 app.use(morgan('combined',{stream:accessLogStream}));
 app.use(morgan('combined',{stream:errorLogStream,skip:(req,res)=>res.statusCode<400}));
@@ -73,6 +79,10 @@ app.use('/purchase',PurchaseRoutes);
 app.use('/premium',PremiumRoutes);
 
 app.use('/password',PasswordRoutes);
+
+app.use((req,res)=>{
+    res.sendFile(path.join(__dirname,`public/${req.url}`))
+})
 
 
 sequelize.sync( /* {force:true} */ )
