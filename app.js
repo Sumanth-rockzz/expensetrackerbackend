@@ -47,6 +47,7 @@ const { downloadExpenses } = require('./controllers/expense');
 
 
 
+
 User.hasMany(Expense);
 Expense.belongsTo(User);
 
