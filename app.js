@@ -21,6 +21,7 @@ app.use(cors());
 
 
 
+
 app.use((req, res, next) => {
     res.setHeader('Content-Security-Policy', "https://cdn.jsdelivr.net https://checkout.razorpay.com ");
     next();
