@@ -53,6 +53,7 @@ const DowloadedFiles=require('./models/downlodedfile');
 const { downloadExpenses } = require('./controllers/expense');
 
 
+console.log("checking jenkins whether its updating or not");
 
 
 User.hasMany(Expense);
