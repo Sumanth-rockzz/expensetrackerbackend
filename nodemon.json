@@ -1,16 +1,2 @@
-{
-    "env":{
-        "TOKEN_SECRET":"secretkey",
-        "RAZORPAY_KEY_ID":"rzp_test_kGQ2EkGv0tbwOa",
-        "RAZORPAY_KEY_SECRET":"xu65PkB7g37j4SxQTXIsBonu",
-        "SENGRID_API_KEY":"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",
-        "AWS_BUCKET_NAME":"expensetrackerfirst",
-        "AWS_KEY_ID":"AKIA4APCULQ5JNUURANP",
-        "AWS_SECRET_KEY":"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",
-        "PORT":"3000",
-        "FROM_EMAIL":"sumanthn876@gmail.com",
-        "MYSQL_SCHEMA":"expense",
-        "MYSQL_USER":"root",
-        "MYSQL_PASSWORD":"Sumanth@123"
-    }
-}
+
+
