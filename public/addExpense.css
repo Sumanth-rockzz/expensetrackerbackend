@@ -88,15 +88,19 @@ tr:nth-child(even){
   color:#850303;
   font-style: italic;
 }
-#leaderboarddetails{
+#leaderboarddetails,#downloadedfilesdiv{
   display:none;
 }
-#leaderboardbtn,#downloadbtn,#downloadedfilesbtn,#downloadedfilesdiv{
+#leaderboardbtn,#downloadbtn,#downloadedfilesbtn{
   display:none;
 }
 #downloadedfileslist{
-  display:-ms-inline-grid;
+  padding-top:50px;
+  display:grid;
   grid-template-columns: auto auto auto;
+}
+li{
+  margin:15px;
 }
 tr{
   text-align: center;
@@ -122,6 +126,11 @@ tr{
         align-items: center;
         justify-content: center;
     }
+    .main-container{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
 }
 
 

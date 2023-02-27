@@ -171,7 +171,7 @@ exports.downloadExpenses=async(req,res,next)=>{
 
 exports.downlodedExpenses=async(req,res,next)=>{
     try{
-      const downlodedfiles = await Downloadfile.findAll({where:{userId:req.user.id},limit:2})
+      const downlodedfiles = await Downloadfile.findAll({where:{userId:req.user.id},limit:15})
        // console.log(">>>>>here",downlodedfiles);
         res.status(200).json({success:true,message:downlodedfiles})
     }catch(err){

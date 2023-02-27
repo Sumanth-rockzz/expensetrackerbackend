@@ -212,7 +212,7 @@ window.addEventListener('DOMContentLoaded',async ()=>{
 
    function showpremiumuser(){
     document.getElementById('premiumbtn').style.display="none";
-    document.getElementById('premiummsg').innerHTML="You are a Premium User";
+    document.getElementById('premiummsg').innerHTML="Premium User";
     document.getElementById('leaderboardbtn').style.display="block";
     downloadbtn.style.display="block";
     downloadedfilesbtn.style.display="block";
@@ -271,15 +271,17 @@ window.addEventListener('DOMContentLoaded',async ()=>{
    async function downloadedfiles(e){
 
             try{
+               
                 e.preventDefault();
                const token= localStorage.getItem('token');
             const response= await axios.get(`http://18.234.80.91:3000/expense/downloadedfiles`,{headers:{'Authorization':token}});
 
             const downloadedfileslist=document.getElementById('downloadedfileslist');
+            downloadedfileslist.innerHTML='';
             for(let i=0;i<response.data.message.length;i++){
 
                 //console.log(response.data.message[0].url);
-                downloadedfileslist.innerHTML+=`<li><a href=${response.data.message[i].url}>TextFile${i}</a></li>`
+                downloadedfileslist.innerHTML+=`<li><a href=${response.data.message[i].url}>TextFile${i+1}</a></li>`
             }
                 
 
