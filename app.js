@@ -53,8 +53,6 @@ const DowloadedFiles=require('./models/downlodedfile');
 const { downloadExpenses } = require('./controllers/expense');
 
 
-
-
 User.hasMany(Expense);
 Expense.belongsTo(User);
 
@@ -84,7 +82,9 @@ app.use('/password',PasswordRoutes);
 app.use((req,res)=>{
     res.sendFile(path.join(__dirname,`public/${req.url}`))
 })
-
+app.use('/',(req,res,next)=>{
+    res.status(404).send("<h1>OOPS! Page Not Found </h1>");
+})
 
 sequelize.sync( /* {force:true} */ )
 .then(()=>{
