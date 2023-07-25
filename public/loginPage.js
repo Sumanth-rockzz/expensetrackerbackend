@@ -23,7 +23,7 @@ async function login(e){
             email:email.value,
             password:password.value
         }
-        const response=await axios.post('http://18.234.80.91:3000/user/login',userdetails)
+        const response=await axios.post('http://localhost:3000/user/login',userdetails)
         form.reset();
         localStorage.setItem('token',response.data.token);
          window.location.href='addExpense.html';

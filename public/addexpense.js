@@ -74,7 +74,7 @@ async function addexpense(e){
        category:category.value
     };
     const token=localStorage.getItem('token');
-    const response =await axios.post('http://18.234.80.91:3000/expense/add-expense',expensedetails,{headers:{"Authorization":token}});
+    const response =await axios.post('http://localhost:3000/expense/add-expense',expensedetails,{headers:{"Authorization":token}});
 
     total=response.data.totalExpense;
     totalexpense.innerHTML=total;
@@ -112,7 +112,7 @@ window.addEventListener('DOMContentLoaded',async ()=>{
             showpremiumuser();
         }
 
-    const response =await axios.get(`http://18.234.80.91:3000/expense/get-expenses?page=${page}&limit=${limit}`,{headers:{"Authorization":token}});
+    const response =await axios.get(`http://localhost:3000/expense/get-expenses?page=${page}&limit=${limit}`,{headers:{"Authorization":token}});
     console.log(response);
     
         total=response.data.totalExpense;
@@ -136,7 +136,7 @@ window.addEventListener('DOMContentLoaded',async ()=>{
     try{
         const token=localStorage.getItem('token');
        const tr=document.getElementById(`${id}`);
-       const response= await axios.delete(`http://18.234.80.91:3000/expense/delete-expense/${id}`,{headers:{"Authorization":token}});
+       const response= await axios.delete(`http://localhost:3000/expense/delete-expense/${id}`,{headers:{"Authorization":token}});
         total=response.data.totalExpense;
         totalexpense.innerHTML=total;
         Expenselist.removeChild(tr);
@@ -155,7 +155,7 @@ window.addEventListener('DOMContentLoaded',async ()=>{
         document.getElementById('reason').value=reason;
         document.getElementById('category').value=category;
         const token=localStorage.getItem('token');
-        const response = await axios.delete(`http://18.234.80.91:3000/expense/delete-expense/${id}`,{headers:{"Authorization":token}});
+        const response = await axios.delete(`http://localhost:3000/expense/delete-expense/${id}`,{headers:{"Authorization":token}});
         total=response.data.totalExpense;
         totalexpense.innerHTML=total;
         Expenselist.removeChild(tr);
@@ -172,13 +172,13 @@ window.addEventListener('DOMContentLoaded',async ()=>{
     try{
         const token=localStorage.getItem('token');
         console.log(token);
-        const response =await axios.get(`http://18.234.80.91:3000/purchase/premiummembership`,{headers:{'Authorization':token}});
+        const response =await axios.get(`http://localhost:3000/purchase/premiummembership`,{headers:{'Authorization':token}});
         console.log(response);
         var options={
             "key":response.data.key_id,
             "order_id":response.data.order.id,
             "handler":async function(response){
-               const result= await axios.post('http://18.234.80.91:3000/purchase/updatetransactionstatus',{
+               const result= await axios.post('http://localhost:3000/purchase/updatetransactionstatus',{
                 order_id:options.order_id,
                 payment_id:response.razor_payment_id},
                 {headers:{"Authorization":token}})
@@ -217,6 +217,7 @@ window.addEventListener('DOMContentLoaded',async ()=>{
     downloadbtn.style.display="block";
     downloadedfilesbtn.style.display="block";
     document.getElementById('downloadedfilesdiv').style.display="block";
+    
   
     
    }
@@ -226,7 +227,7 @@ window.addEventListener('DOMContentLoaded',async ()=>{
         
     const leaderboardtablebody=document.getElementById('leaderboardtablebody');
     const token=localStorage.getItem('token');
-    const sortedarray= await axios.get(`http://18.234.80.91:3000/premium/leaderboard`,{headers:{'Authorization':token}});
+    const sortedarray= await axios.get(`http://localhost:3000/premium/leaderboard`,{headers:{'Authorization':token}});
 
     console.log(">>>>",sortedarray.data.leaderboarddetails);
     let i=1;
@@ -250,7 +251,7 @@ window.addEventListener('DOMContentLoaded',async ()=>{
     e.preventDefault();
     try{
         const token=localStorage.getItem('token');
-        const response  =  await axios.get(`http://18.234.80.91:3000/expense/download`,{headers:{'Authorization':token}});
+        const response  =  await axios.get(`http://localhost:3000/expense/download`,{headers:{'Authorization':token}});
         
         console.log(response);
         if(response.status===200){
@@ -274,7 +275,7 @@ window.addEventListener('DOMContentLoaded',async ()=>{
                
                 e.preventDefault();
                const token= localStorage.getItem('token');
-            const response= await axios.get(`http://18.234.80.91:3000/expense/downloadedfiles`,{headers:{'Authorization':token}});
+            const response= await axios.get(`http://localhost:3000/expense/downloadedfiles`,{headers:{'Authorization':token}});
 
             const downloadedfileslist=document.getElementById('downloadedfileslist');
             downloadedfileslist.innerHTML='';
@@ -322,7 +323,7 @@ window.addEventListener('DOMContentLoaded',async ()=>{
     try{
         const limit=localStorage.getItem('limit');
         const token= localStorage.getItem('token');
-        const response =await axios.get(`http://18.234.80.91:3000/expense/get-expenses?page=${page}&limit=${limit}`,{headers:{"Authorization":token}});
+        const response =await axios.get(`http://localhost:3000/expense/get-expenses?page=${page}&limit=${limit}`,{headers:{"Authorization":token}});
     
             console.log("$$$$$$$$$$$",response)
 

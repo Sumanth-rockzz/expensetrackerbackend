@@ -27,7 +27,7 @@ async function signup(e){
             number:number.value,
             password:password.value
         }
-        const response =await axios.post('http://18.234.80.91:3000/user/signup',userdetails)
+        const response =await axios.post('http://localhost:3000/user/signup',userdetails)
         form.reset();
         window.location.href='loginPage.html';
     }

@@ -16,7 +16,7 @@ async function reset(e){
             const emaildetails={
                 email:email.value
             }
-            const response=await axios.post('http://18.234.80.91:3000/password/forgotpassword',emaildetails)
+            const response=await axios.post('http://localhost:3000/password/forgotpassword',emaildetails)
                 console.log(response);
             email.value='';
         }
